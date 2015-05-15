@@ -1,0 +1,24 @@
+﻿<main class="container-fluid">
+    <header class="jumbotron">
+        <h1>News feed</h1>
+    </header>
+
+    <div class="row">
+        <section class="col-md-8"></section>
+        <aside class="col-md-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Friends <a href="#/friends"><span class="badge">{{friends.length}}</span></a></h3>
+                </div>
+                <div class="panel-body">
+                    <p class="text-danger" data-ng-if="friends.length === 0">No friends</p>
+                    <div class="row" data-ng-if="friends.length !== 0">
+                        <div class="col-md-6">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+</main>

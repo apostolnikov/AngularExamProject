@@ -1,0 +1,110 @@
+﻿<main class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="well">
+                <form class="form-horizontal" data-ng-submit="login()">
+                    <fieldset>
+                        <legend>Login</legend>
+                        <div class="form-group">
+                            <label for="inputUsername" class="col-lg-2 control-label">Username</label>
+                            <div class="col-lg-10">
+                                <input type="text" required class="form-control" id="inputUsername" placeholder="Username" data-ng-model="loginData.username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                            <div class="col-lg-10">
+                                <input type="password" required class="form-control" id="inputPassword" placeholder="Password" data-ng-model="loginData.password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-2">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="well">
+                <form name="registerForm" class="form-horizontal" data-ng-submit="register()">
+                    <fieldset>
+                        <legend>Register</legend>
+                        <div class="form-group">
+                            <label for="inputUsername" class="col-lg-2 control-label">Username</label>
+                            <div class="col-lg-10">
+                                <input type="text" required class="form-control" id="inputUsername" placeholder="Username" data-ng-model="registerData.username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                            <div class="col-lg-10">
+                                <input type="password" required class="form-control" id="inputPassword" placeholder="Password" data-ng-model="registerData.password"
+                                       data-ng-minlength="6" data-ng-maxlength="100" name="password">
+                                <span class="helper-block" ng-show="registerForm.password.$error.minlength">
+                                    Too short password!
+                                </span>
+                                <span class="helper-block" ng-show="registerForm.password.$error.maxlength">
+                                    Too long password!
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputConfirmPassword" class="col-lg-2 control-label">Confirm password</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" id="inputConfirmPassword" placeholder="Confirm password"
+                                       name="confirmPassword" data-ng-model="registerData.confirmPassword"
+                                       data-ng-match="registerData.password">
+                                <span class="helper-block" ng-show="registerForm.confirmPassword.$error.match">
+                                    Passwords doesn`t match!
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputName" class="col-lg-2 control-label">Name</label>
+                            <div class="col-lg-10">
+                                <input type="text" required class="form-control" id="inputName" placeholder="Name" data-ng-model="registerData.name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                            <div class="col-lg-10">
+                                <input type="text" required class="form-control" id="inputEmail" placeholder="Email" data-ng-model="registerData.email">
+                            </div>
+                        </div>
+                        <div class="form-group" data-ng-init="registerData.gender='0'">
+                            <label class="col-lg-2 control-label">Gender</label>
+                            <div class="col-lg-10">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="0" checked="checked" data-ng-model="registerData.gender">
+                                        Male
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="1" data-ng-model="registerData.gender">
+                                        Female
+                                    </label>
+                                </div>
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="2" data-ng-model="registerData.gender">
+                                        Other
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-2">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
