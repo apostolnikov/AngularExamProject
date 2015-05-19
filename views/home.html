@@ -1,4 +1,5 @@
-﻿<main class="container-fluid">
+﻿<main class="container-fluid" data-ng-if="user.isLogged" data-ng-controller="HomeViewModel">
+    {{user.password}}
     <header class="jumbotron">
         <h1>News feed</h1>
     </header>
@@ -22,3 +23,6 @@
         </aside>
     </div>
 </main>
+
+<!-- Show login page if not logged in -->
+<div data-ng-if="!user.isLogged" data-ng-include="'/views/login.html'" data-ng-controller="HomeViewModel"></div>

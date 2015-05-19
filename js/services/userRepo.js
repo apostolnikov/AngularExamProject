@@ -1,99 +1,101 @@
 ﻿"use strict";
 
-app.service( "userRepository",
-[
-    "$location", "ajax", "notify",
+app.factory("user", ["SERVER_URL", "notify", "$resource", "$http",
 
-    function( $location, ajax, notify ) {
-        var userRepo = this;
+    function (SERVER_URL, notify, $resource, $http) {
+        var plainUser,
+            loggedInUser,
+            foundUsers,
+            selectedUserProfile = {};
 
-        this.user = {};
+        var User = $resource(SERVER_URL + "users/:action/:secondParam", { action: "", secondParam: "" },
+        {
+            "login": {
+                method: 'POST',
+                params: { action: "Login" },
+                interceptor: { response: onAuthenticated, responceError: onError }
+            },
+            "register": {
+                method: "POST",
+                params: { action: "Register" },
+                interceptor: { response: onAuthenticated, responceError: onError }
+            },
+            "logout": {
+                method: "POST",
+                //headers: headers,
+                params: { action: "Logout" },
+                interceptor: { response: clearAuthenticationData, responseError: onError }
+            }
+        });
 
-        if ( localStorage.user && localStorage.token ) {
-            this.user = JSON.parse( localStorage.user );
-            this.user.isLoggedIn = true;
-            ajax.token = JSON.parse( localStorage.token );
+        if (sessionStorage.user) {
+            plainUser = JSON.parse(sessionStorage.user);
+        } else if (localStorage.user) {
+            plainUser = JSON.parse(localStorage.user);
         } else {
-            reset();
+            plainUser = { isLogged: false };
         }
 
-        // Public functions
-        this.login = function( loginData ) {
-            ajax
-                .post( "users/Login", loginData )
-                .success( onAuthenticated )
-                .error( notify.error );
-        };
+        loggedInUser = new User(plainUser);
 
-        this.register = function( registerData ) {
-            ajax
-                .post( "users/Register", registerData )
-                .success( onAuthenticated )
-                .error( notify.error );
-        };
-
-        this.logout = function() {
-            ajax
-                .post( "users/Logout" )
-                .success(function() {
-                    reset();
-                    $location.path( "/login" );
-                })
-                .error( notify.error );
-        };
-
-        this.getUserData = function( username, isPreview ) {
-            var url = "users/" + username;
-            url += isPreview ? "/preview" : "";
-            return ajax.get( url );
-        };
-
-        this.searchUsers = function( searchTerm ) {
-            var url = "users/search?searchTerm=" + searchTerm;
-            return ajax.get( url );
-        };
-
-        this.getUserWallData = function( username, count, start ) {
-            var url = "users/" + username +
-                "/wall?StartPostId=" + start + "&PageSize=" + count;
-            return ajax.get( url );
-        };
-
-        this.getUserFriends = function( username, isPreview ) {
-            var url = "users/" + username + "/friends";
-            url += isPreview ? "/preview" : "";
-            return ajax.get( url );
-        };
-        
-        // Private stuff
-        function reset() {
-            userRepo.user.isLoggedIn = false;
-            ajax.token = null;
-            localStorage.clear();
+        if (sessionStorage.user || localStorage.user) {
+            onAuthenticated();
         }
 
-        function onAuthenticated( response ) {
-            ajax.token = {
-                "token_type": response[ "token_type" ],
-                "access_token": response[ "access_token" ]
-            };
-            localStorage.token = JSON.stringify( ajax.token );
-
-            ajax.get( "me" ).error( notify.error )
-                .success(function( userData ) {
-                    angular.extend( userRepo.user, userData );
-                    userRepo.user.isLoggedIn = true;
-                    localStorage.user = JSON.stringify( userData );
-                    $location.path( "/" );
+        return {
+            get loggedInUser() {
+                return loggedInUser;
+            },
+            get selectedUserProfile() {
+                return selectedUserProfile;
+            },
+            get foundUsers() {
+                return foundUsers;
+            },
+            loadUserProfile: function (username, isPreview) {
+                selectedUserProfile = User.get({
+                    action: username,
+                    secondParam: isPreview ? "isPreview" : undefined
                 });
-        }
-   
-        ajax.onUnauthorized = function( data, status, func, xhr ) {
-            if ( xhr.url.endsWith( "Logout" ) ) {
-                reset();
-                $location.path( "/login" );
-            } else {
-                userRepo.logout();
+            },
+            searchUsers: function (searchTerm) {
+                if (searchTerm === "") return;
+
+                foundUsers = User.query({
+                    action: "search",
+                    searchTerm: searchTerm
+                });
             }
         };
-}]);
+
+        // Private stuff
+        function onError() {
+            console.log(arguments);
+        }
+
+        function clearAuthenticationData() {
+            delete localStorage.user;
+            delete sessionStorage.user;
+            delete headers.Authorization;
+
+            // Clear custom properties
+            Object.keys(loggedInUser).forEach(function (property) {
+                if (!property.startsWith("$")) delete loggedInUser[property];
+            });
+        }
+
+        function onAuthenticated() {
+            delete loggedInUser.password;
+
+            if (loggedInUser.rememberMe) {
+                localStorage.user = JSON.stringify(loggedInUser);
+            } else {
+                sessionStorage.user = JSON.stringify(loggedInUser);
+            }
+
+            
+            loggedInUser.isLogged = true;
+            $http.defaults.headers.common['Authorization'] = loggedInUser["token_type"] + " " + loggedInUser["access_token"];
+            //user.$load();
+        }
+    }]);

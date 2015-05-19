@@ -75,12 +75,14 @@
     <Content Include="css\style.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="index.html" />
+    <Content Include="js\lib\angular-resource.js" />
     <Content Include="js\lib\angular-route.js" />
     <Content Include="js\lib\angular.js" />
     <Content Include="js\lib\bootstrap.min.js" />
     <Content Include="js\lib\jquery-2.1.4.min.js" />
     <Content Include="js\app.js" />
-    <Content Include="js\services\ajax.js" />
+    <Content Include="js\services\httpClient.js" />
+    <Content Include="js\services\image.js" />
     <Content Include="js\services\notify.js" />
     <Content Include="js\services\profileRepo.js" />
     <Content Include="js\services\userRepo.js" />
@@ -88,7 +90,6 @@
     <Content Include="js\viewModels\home.js" />
     <Content Include="js\viewModels\navbar.js" />
     <Content Include="js\viewModels\profile.js" />
-    <Content Include="js\viewModels\userAuthentication.js" />
     <Content Include="views\edit.html" />
     <Content Include="views\home.html" />
     <Content Include="views\login.html" />

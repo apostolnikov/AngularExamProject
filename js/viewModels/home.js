@@ -2,10 +2,24 @@
 
 app.controller( "HomeViewModel",
 [ 
-    "$scope", //"userRepository",
+    "$scope", "user", //"profileRepository",
     
-    function( $scope, userRepository ) {
+    function ($scope, user) {
         $scope.friends = [];
+        $scope.user = user.loggedInUser;
+        $scope.selectedUser = user.selectedUserProfile;
+
+        //$scope.profile = profileRepository.profile;
+        //$scope.login = function() {
+        //    userRepository.login( $scope.loginData, $scope.rememberMe );
+        //};
+        //$scope.register = function() {
+        //    userRepository.register( registerData, false );
+        //};
+
+        if ($scope.user.isLogged) {
+            //profileRepository.loadProfile();
+        }
 
         //userRepository
         //    .getFriends()

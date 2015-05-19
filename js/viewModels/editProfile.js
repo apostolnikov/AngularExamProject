@@ -1,35 +1,30 @@
 ﻿"use strict";
 
-app.controller( "EditProfileViewModel", [ "$scope", "userRepository", function( $scope, userRepo ) {
-    var user = userRepo.user;
+app.controller( "EditProfileViewModel",
+[ 
+    "$scope", "profileRepository", "image",
 
-    $scope.name = user.name;
-    $scope.email = user.email;
-    $scope.gender = user.gender;
+    function( $scope, profileRepository, image ) {
+        $scope.profile = profileRepository.profile;
+        $scope.createImage = image.appendBase64Header;
 
-    console.log(user);
+        $scope.editProfile = function() {
+            var profilePhotoFileInput = document.getElementById( "profilePictureInput" ),
+                coverPhotoFileInput = document.getElementById( "coverPhotoInput" ),
+                profilePhoto = profilePhotoFileInput.files[ 0 ],
+                coverPhoto = coverPhotoFileInput.files[ 0 ];
+                
 
-    $scope.editProfile = function() {
-        getBase64(function( base64 ) {
-            var regex = /^data:image\/(.+?);base64,(.+)$/i;
+            image.convertToBase64( profilePhoto, function( base64 ) {
+                $scope.profile.profilePhotoData = image.extractBase64Data( base64 );
+            });
 
-            console.log(regex.exec(base64)[2]);
-        });
-    };
+            image.convertToBase64( coverPhoto, function( base64 ) {
+                $scope.profile.coverPhotoData = image.extractBase64Data( base64 );
+            });
 
-    function getBase64( callback ) {
-        var fileInput = document.getElementById( "profilePictureInput" ),
-            file = fileInput.files[ 0 ],
-            fileReader = new FileReader();
-
-        fileReader.onloadend = function() {
-            callback( fileReader.result );
-        }
-
-        if ( file ) {
-            fileReader.readAsDataURL( file );
-        } else {
-            callback( null );
-        }
-    }
+            profileRepository.updateProfile().success(function( data ) {
+                console.log( data );
+            });
+        };
 }]);

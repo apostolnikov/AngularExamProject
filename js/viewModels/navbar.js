@@ -2,27 +2,30 @@
 
 app.controller( "NavbarViewModel",
 [ 
-    "$scope", "userRepository",
+    "$scope", "user", "$rootScope",
     
-    function( $scope, userRepository ) {
-        $scope.user = userRepository.user;
-        console.log($scope.user);
+    function ($scope, user, $rootScope) {
+        //loadRequests();
+
+        $scope.userRepository = user;
+       // $scope.profile = profileRepository.profile;
+        //$scope.createImage = image.appendBase64Header;
+
         $scope.users = [];
-        // Reload friend requests on every route
-            //$rootScope.$on("$locationChangeSuccess", function() {
-            //   if ( user.isLogged ) getFriendRequests();
-            //});
-        $scope.search = function() {
-            if ( !$scope.searchText ) {
-                $scope.users = [];
+
+        function onRouteChanged() {
+            // Hide search results
+            $scope.users = [];
+            $scope.searchText = "";
+
+            if ( !userRepository.user.isLogged ) {
                 return;
             }
 
-            userRepository.searchUsers( $scope.searchText ).success(function( res ) {
-                $scope.users = res;
-                console.log(res);
-            });
-        };
-
-        $scope.logout = userRepository.logout;
+            profileRepository.getFriendRequests()
+                .success(function( friendRequests ) {
+                    $scope.friendRequests = friendRequests;
+                })
+                .error(function(){});
+        }
 }]);
