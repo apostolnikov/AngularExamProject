@@ -1,0 +1,32 @@
+<ul class="nav" >
+<li><a href="#" data-toggle="offcanvas" class="visible-xs text-center"><i class="glyphicon glyphicon-chevron-right"></i></a></li>
+</ul>
+<ul class="nav hidden-xs" id="lg-menu">
+  <li class="active">
+    <a href="#/profile">
+      <img ng-if="meData.profileImageData!=null"class='sidebar-thumb' ng-src="{{meData.profileImageData}}" />
+      <img ng-if="meData.profileImageData==null"class='sidebar-thumb' src="img/user-default.jpg" />{{meData.name}}
+    </a>
+  </li>
+  
+  <!-- friends preview-->
+  <li class="active">
+    <h4 class='text-info'>Friends list</h4>
+    
+    <ul class='nav' ng-controller='userProfileController' ng-include="'partials/friends/friends-preview.html'" 
+      ng-init="getOwnFriendsPreview()"></ul>
+
+  </li>
+  <!-- /friends preview-->
+</ul>          
+
+<!-- tiny only nav-->
+<ul class="nav visible-xs" id="xs-menu">
+  <li class="active">
+    <a href="#/profile">
+      <img style='width:23px; height:23px;' ng-if="meData.profileImageData!=null"class='sidebar-thumb' ng-src="{{meData.profileImageData}}" />
+      <img style='width:23px; height:23px;' ng-if="meData.profileImageData==null"class='sidebar-thumb' 
+        src="img/user-default.jpg" />
+    </a>
+  </li>
+</ul>

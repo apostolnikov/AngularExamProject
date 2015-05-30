@@ -1,0 +1,41 @@
+<div class="fb-profile">
+  <img ng-if='friendData.coverImageData!=null'align="left" class="fb-image-lg" 
+  ng-src="{{friendData.coverImageData}}" alt="Cover image"/>
+  <img ng-if='friendData.coverImageData==null'align="left" class="fb-image-lg" 
+  src="img/cover-default.jpg" alt="Cover image"/>
+
+  <img ng-if='friendData.profileImageData!=null' align="left" class="fb-image-profile thumbnail" ng-src="{{friendData.profileImageData}}" alt="Profile image" />
+  <img ng-if='friendData.profileImageData==null' align="left" class="fb-image-profile thumbnail" src="img/user-default.jpg" alt="Profile image" />
+  <div class="fb-profile-text">
+    <h1>{{friendData.name}}({{friendData.username}})</h1>
+    <button ng-if="friendData.isFriend==true"class='btn btn-success btn-lg disabled'>
+      <i class='glyphicon glyphicon-ok'></i> Friends</button>
+
+      <button ng-if="friendData.hasPendingRequest==true"class='btn btn-success btn-lg disabled'>
+      <i class='glyphicon glyphicon-envelope'></i> Friend request sent</button>
+    
+    <button ng-if="friendData.isFriend==false && friendData.hasPendingRequest==false"class='btn btn-success btn-lg' 
+      ng-controller='userProfileController' ng-click='sendFriendRequest(username)'>
+    <i class='glyphicon glyphicon-envelope'></i> Send friend request</button>
+  
+  </div>
+</div>
+
+
+    <!-- post box -->
+    
+      <div class='status-col column col-lg-8 col-sm-8 col-xs-8 pull-right' 
+        ng-include="'partials/friends/friend-post-box.html'" ng-if='friendData.isFriend==true' ng-controller='postController'>
+      </div>
+    
+    <!-- /post box -->
+
+    <!-- wall feed -->
+    <div ng-controller='userController' ng-init="getUserWallPosts()">
+      <div class='column col-lg-8 col-sm-8 col-xs-8 pull-right' 
+        ng-include="'partials/posts/wall-feed.html'" ng-controller='postController'>
+      </div>
+      <button ng-if="noMore==false"class='btn btn-block btn-info' ng-click='feed()'>View more</button>
+      <button ng-if="noMore==true"class='btn btn-block btn-info disabled'>No more posts</button>
+    </div>
+    <!-- /wall feed -->

@@ -1,0 +1,8 @@
+<form class='form-inline comment-form column' name='newCommentForm' 
+	ng-submit="postComment(newCommentForm.$valid, post.id)" novalidate>
+   	<div class='form-group col-lg-9' ng-class="{'has-error': newCommentForm.newComment.$invalid && !newCommentForm.newComment.$pristine }">
+   	<input class='form-control' type='text' name='newComment' placeholder='Enter comment' required 
+   		ng-pattern='/[A-z0-9_.!@#$%^*+\&-()_-]{2,}/' ng-model='newComment.commentContent'/>
+   	</div>
+   	<button type='submit' class="btn btn-success btn-lg" ng-click='$parent.updatePost(post.id); $parent.apply();' ng-disabled='newCommentForm.$invalid'>Post</button>
+</form>

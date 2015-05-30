@@ -1,0 +1,19 @@
+<div class="fb-profile" ng-init="getDataAboutMe();" ng-controller="userProfileController">
+  <img ng-if='meData.coverImageData!=null'align="left" class="fb-image-lg" 
+  ng-src="{{meData.coverImageData}}" alt="Cover image"/>
+  <img ng-if='meData.coverImageData==null'align="left" class="fb-image-lg" 
+  src="img/cover-default.jpg" alt="Cover image"/>
+
+  <img ng-if='meData.profileImageData!=null' align="left" class="fb-image-profile thumbnail" ng-src="{{meData.profileImageData}}" alt="Profile image" />
+  <img ng-if='meData.profileImageData==null' align="left" class="fb-image-profile thumbnail" src="img/user-default.jpg" alt="Profile image" />
+  <div class="fb-profile-text">
+    <h1>{{meData.name}}({{meData.username}})</h1>
+  </div>
+</div>
+
+<div ng-controller='userProfileController' ng-init='getOwnWallPosts()'>
+  <div class='column col-lg-8 col-sm-8 col-xs-8 center-block' ng-include="'partials/posts/wall-feed.html'" ng-controller='postController'>
+  </div>
+  <button ng-if="noMore==false"class='btn btn-block btn-info' ng-click='feed()'>View more</button>
+  <button ng-if="noMore==true"class='btn btn-block btn-info disabled'>No more posts</button>
+</div>

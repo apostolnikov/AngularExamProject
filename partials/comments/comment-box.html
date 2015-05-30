@@ -1,0 +1,23 @@
+<div class="comments-list">
+  <div class="media" ng-repeat='comment in post.comments | reverse'>
+    <a class="media-left" href="#/users/{{comment.author.username}}">
+      <img ng-src="{{comment.author.profileImageData}}">
+      <h4 class="media-heading user_name">{{comment.author.name}}</h4>
+    </a>
+    <div class="media-body">{{comment.commentContent}}
+      <p class='comment-options'>
+        <small ng-if='comment.liked==false && (post.author.isFriend==true || post.wallOwner.isFriend==true)'>
+          <a href="javascript:undefined" 
+            ng-click='likeComment(post.id, comment.id); $parent.updatePost(post.id); $parent.apply();'>Like</a>
+        </small>
+        <small ng-if='comment.liked==true && (post.author.isFriend==true || post.wallOwner.isFriend==true)'>
+          <a href="javascript:undefined" 
+            ng-click='unlikeComment(post.id, comment.id); $parent.updatePost(post.id); $parent.apply();'>Unlike</a>
+        </small>
+        <small><i class='glyphicon glyphicon-thumbs-up'></i> {{comment.likesCount}} likes</small>
+        <small>{{comment.date}}</small>
+      </p>
+    </div>
+  </div>
+  <a href='javascript:undefined' class='btn center-block'>Load more</a>
+</div>

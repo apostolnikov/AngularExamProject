@@ -1,0 +1,10 @@
+<ul class='nav'>
+  <li class="active" ng-repeat='friend in friendsPreview.friends'>
+    <a href="#/users/{{friend.username}}">
+      <img ng-if="friend.profileImageData!=null"class='sidebar-thumb' ng-src="{{friend.profileImageData}}" />
+      <img ng-if="friend.profileImageData==null"class='sidebar-thumb' src="img/user-default.jpg" />{{friend.name}}
+    </a>
+  </li>
+</ul>
+
+<a href="#/profile/friends" id='seeAll'>See all({{friendsPreview.totalCount}})</a>

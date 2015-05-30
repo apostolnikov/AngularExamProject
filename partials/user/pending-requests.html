@@ -1,0 +1,18 @@
+<li href="#/" class="list-group-item text-left">
+    <a ng-if="friendRequestsInfo.has==true" href="#/">See all</a>
+    <label ng-if="friendRequestsInfo.has==false" class="name request-header">No requests at this time</label>
+</li>
+
+<li href="#" class="list-group-item text-left request-item" ng-repeat= "request in friendRequests">
+  <img ng-if="request.user.profileImageData!=null" class="img-thumbnail" ng-src="{{request.user.profileImageData}}">
+  <img ng-if="request.user.profileImageData==null" class="img-thumbnail" src="img/user-default.jpg">
+  
+  <label class="name">{{request.user.name}}({{request.user.username}})</label>
+  <label class="pull-right">
+    <button class="btn btn-success" title="Accept" ng-click="respondToFriendRequest(request.id, 'approved')">
+    <i class='glyphicon glyphicon-ok'></i></button>
+    <button class="btn btn-danger" title="Reject" 
+      ng-click="respondToFriendRequest(request.id, 'rejected')"><i class='glyphicon glyphicon-remove'></i></button>
+  </label>
+  <div class="break"></div>
+</li>

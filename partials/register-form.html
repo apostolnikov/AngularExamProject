@@ -1,0 +1,60 @@
+<div class="col-md-7">
+    <h3 class="slogan">This site does not help you connect with other people. Enjoy your stay!</h3>
+    <img src="img/background.png" class="img-responsive" />
+</div>
+<div class="col-md-5">
+    <form class="form" role="form" name='registerForm' 
+        novalidate ng-submit='userRegister(registerForm.$valid)'>
+        <legend><a>Create your account</a></legend>
+            <h4>It's free, but not for long</h4>
+            
+            <div ng-class="{ 'has-error' : registerForm.username.$invalid && !registerForm.username.$pristine }">
+                <input class="form-control input-lg" ng-model='registerData.username'
+                 name="username" placeholder="Your username" type="text" ng-pattern='/[A-z0-9_.]{3,}/' required/>
+            </div>
+
+            <div ng-class="{ 'has-error' : registerForm.name.$invalid && !registerForm.name.$pristine }">
+                <input class="form-control input-lg" name="name" placeholder="Your name" type="text" 
+                ng-pattern='/[A-z ]{5,}/' ng-model='registerData.name' required/>
+            </div>
+
+            <div ng-class="{ 'has-error' : registerForm.email.$invalid && !registerForm.email.$pristine }">
+                <input class="form-control input-lg" name="email" placeholder="Your Email" 
+                type="email" ng-model='registerData.email' required/>
+            </div>
+
+            <div ng-class="{ 'has-error' : registerForm.password.$invalid && !registerForm.password.$pristine }" >
+                <input class="form-control input-lg" name="password" placeholder="New Password" type="password" 
+                    ng-pattern="/.{6,}/" ng-model='registerData.password' required/>
+            </div>
+
+            <div ng-class="{ 'has-error' : registerForm.confirmPassword.$invalid && !registerForm.confirmPassword.$pristine }">
+                <input class="form-control input-lg" name="confirmPassword" placeholder="Confirm password" type="password" 
+                 ng-pattern="/.{6,}/" ng-model='registerData.confirmPassword' required/>
+            </div>
+
+            <div ng-class="{ 'has-error' : registerForm.gender.$invalid && !registerForm.gender.$pristine }">
+            <label class="radio-inline">
+                <input type="radio" name="gender" value="1" required ng-model='registerData.gender'/>
+                Male
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="gender" value="2" required ng-model='registerData.gender'/>
+                Female
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="gender" value="0" required ng-model='registerData.gender'/>
+                Other
+            </label>
+            </div>
+            <br />
+
+            <span class="help-block">By clicking Create my account, you do not agree to anything.</span>
+            <button id='register-button' class="btn btn-lg btn-primary btn-block signup-btn" type="submit"
+                ng-disabled="registerForm.$invalid">
+                Create my account</button>
+            </form>
+            </div>
+        </div>
+      </div>
+    </div>

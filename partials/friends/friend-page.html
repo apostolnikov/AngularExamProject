@@ -1,0 +1,33 @@
+<div class="wrapper">
+    <div class="box">
+        <div class="row row-offcanvas row-offcanvas-left">
+
+            <!-- sidebar -->
+            <div class="column col-sm-2 col-xs-1 sidebar-offcanvas" id="sidebar" ng-include="'partials/user/user-sidebar.html'"
+              ng-init="getDataAboutMe()" ng-controller="userProfileController">
+            </div>
+            <!-- /sidebar -->
+          
+            <!-- main right col -->
+            <div class="column col-sm-10 col-xs-11" id="main">
+                
+                <!-- top nav -->
+              	<div class="navbar navbar-blue navbar-static-top" ng-include="'partials/user/user-header.html'"></div>
+                <!-- /top nav -->
+                
+                <!-- profile box -->
+                <div ng-include="'partials/friends/friend-profile.html'" ng-init="friendFullInformation(username)"></div>
+                <!-- /profile box -->
+
+            <!-- /main -->
+        </div>
+    </div>
+</div>
+
+<!--post modal-->
+<div id="postModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" ng-include="'partials/post-modal.html'">
+</div>
+
+<div id="passwordModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" 
+ng-include="'partials/change-password-modal.html'" ng-controller='userProfileController'>
+</div>

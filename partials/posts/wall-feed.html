@@ -1,0 +1,49 @@
+<div class="qa-message-list" id="wallmessages">
+
+    <div class="message-item" ng-repeat='post in (currentPosts = (wallPosts | limitTo: feedLimit))'>
+		<div class="message-inner">
+			<div class="message-head clearfix">
+				<div class="avatar pull-left">
+					<a href="#/users/{{post.author.username}}">
+						<img ng-if="post.author.profileImageData!=null" ng-src="{{post.author.profileImageData}}">
+						<img ng-if="post.author.profileImageData==null" src="img/user-default.jpg">
+					</a>
+				</div>
+				<div class="user-detail">
+					<h5 class="handle"><a href="#/users/{{post.author.username}}">{{post.author.name}}</a></h5>
+					<div class="post-meta">
+						<div class="asker-meta">
+							<span class="qa-message-what"></span>
+							<span class="qa-message-when">
+								<span class="qa-message-when-data">{{post.date}}</span>
+							</span>
+							<span class="qa-message-who">
+								<span class="qa-message-who-pad">by </span>
+								<span class="qa-message-who-data">
+									<a href="#/users/{{post.author.username}}">{{post.author.name}}</a>
+								</span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="qa-message-content">{{post.postContent}} 
+				<div class='like-button'>
+					<a ng-if='post.liked==false && (post.author.isFriend==true || post.wallOwner.isFriend==true)' 
+						ng-click='likePost(post.id); updatePost(post.id); apply();' href='javascript:undefined'>
+						Like</a>
+					<a ng-if='post.liked==true && (post.author.isFriend==true || post.wallOwner.isFriend==true)' 
+						ng-click = "unlikePost(post.id); updatePost(post.id); apply();" href='javascript:undefined'>
+						Unlike</a>
+				</div>
+			</div>
+			<div class='like-box'><i class='glyphicon glyphicon-thumbs-up'></i> {{post.likesCount}} people like this</div>
+			
+			<div ng-if="post.totalCommentsCount!=0" ng-include="'partials/comments/comment-box.html'" 
+				ng-controller='commentController'></div>
+			<div ng-if='post.author.isFriend==true || post.wallOwner.isFriend==true' ng-include="'partials/comments/add-comment-form.html'" ng-controller='commentController'></div>
+
+		</div>
+	</div>
+	
+</div>
